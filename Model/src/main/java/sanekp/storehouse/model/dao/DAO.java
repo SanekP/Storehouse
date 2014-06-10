@@ -9,9 +9,12 @@ import java.util.List;
  * Created by sanek_000 on 6/10/2014.
  */
 public abstract class DAO<T, PK extends Serializable> {
-    @PersistenceContext(unitName = "TrololoPU")
+    @PersistenceContext(unitName = "StorehousePU")
     protected EntityManager entityManager;
     protected Class<T> type;
+
+    public DAO() {
+    }
 
     public DAO(Class<T> type) {
         this.type = type;
