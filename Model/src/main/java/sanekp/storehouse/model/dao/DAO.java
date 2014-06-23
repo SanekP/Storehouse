@@ -2,6 +2,11 @@ package sanekp.storehouse.model.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 
@@ -43,6 +48,17 @@ public abstract class DAO<T, PK extends Serializable> {
 
     public void delete(T entity) {
         entityManager.remove(entity);
+    }
+
+    public Long size() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<T> root = criteriaQuery.from(type);
+        Expression<Long> count = criteriaBuilder.count(root);
+        criteriaQuery.select(count);
+        TypedQuery<Long> typedQuery = entityManager.createQuery(criteriaQuery);
+        Long singleResult = typedQuery.getSingleResult();
+        return singleResult;
     }
 
     public EntityManager getEntityManager() {
