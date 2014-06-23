@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by sanek_000 on 6/10/2014.
  */
 @Entity
-@Table(name = "t_product_type")
-@NamedQueries({@NamedQuery(name = "ProductType.findAll", query = "SELECT o FROM ProductTypeEntity o")})
+@Table(name = "t_product_type", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@NamedQueries({@NamedQuery(name = "ProductType.findAll", query = "SELECT o FROM ProductTypeEntity o ORDER BY o.name")})
 public class ProductTypeEntity extends AbstractEntity {
     private String name;
 
